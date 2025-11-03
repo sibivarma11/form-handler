@@ -22,9 +22,7 @@ class FormSubmissionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('contact_form_id')
-                    ->relationship('contactForm', 'name')
-                    ->required(),
+
                 Forms\Components\KeyValue::make('data')
                     ->label('Submitted Data')
                     ->columnSpanFull(),
@@ -39,9 +37,7 @@ class FormSubmissionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('contactForm.name')
-                    ->label('Form')
-                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('data.email')
                     ->label('Email')
                     ->default('N/A'),
@@ -55,9 +51,7 @@ class FormSubmissionResource extends Resource
                 //     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('contact_form_id')
-                    ->relationship('contactForm', 'name')
-                    ->label('Form'),
+
                 Tables\Filters\TernaryFilter::make('is_read'),
             ])
             ->actions([

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class FormSubmission extends Model
 {
     protected $fillable = [
-        'contact_form_id',
         'data',
         'ip_address',
         'user_agent',
@@ -20,8 +19,5 @@ class FormSubmission extends Model
         'is_read' => 'boolean',
     ];
 
-    public function contactForm(): BelongsTo
-    {
-        return $this->belongsTo(ContactForm::class);
-    }
+
 }

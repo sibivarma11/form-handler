@@ -16,7 +16,6 @@
     <div class="container">
         <div class="header">
             <h2>New Form Submission</h2>
-            <p>{{ $submission->contactForm->name }}</p>
         </div>
         
         <div class="content">

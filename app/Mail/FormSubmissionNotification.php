@@ -20,7 +20,7 @@ class FormSubmissionNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Form Submission: ' . $this->submission->contactForm->name,
+            subject: 'New Form Submission',
         );
     }
 
