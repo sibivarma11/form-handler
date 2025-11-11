@@ -36,11 +36,23 @@ class FormSubmissionController extends Controller
         ]);
 
         try {
-            $notificationEmail = EmailSetting::get('contact_form_recipient', config('mail.from.address'));
-            Mail::to($notificationEmail)
-                ->send(new FormSubmissionNotification($submission));
+            $recipient = EmailSetting::get('contact_form_recipient');
+            
+            if ($recipient) {
+                config([
+                    'mail.mailers.smtp.host' => EmailSetting::get('mail_host'),
+                    'mail.mailers.smtp.port' => EmailSetting::get('mail_port'),
+                    'mail.mailers.smtp.username' => EmailSetting::get('mail_username'),
+                    'mail.mailers.smtp.password' => EmailSetting::get('mail_password'),
+                    'mail.mailers.smtp.encryption' => EmailSetting::get('mail_encryption'),
+                    'mail.from.address' => EmailSetting::get('mail_from_address'),
+                    'mail.from.name' => EmailSetting::get('mail_from_name'),
+                ]);
+                
+                Mail::to($recipient)->send(new FormSubmissionNotification($submission));
+            }
         } catch (\Exception $e) {
-            \Log::error('Failed to send form notification: ' . $e->getMessage());
+            // Email sending failed silently
         }
 
         return response()->json([

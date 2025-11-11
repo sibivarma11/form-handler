@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/form-submission', [FormSubmissionController::class, 'store']);
+Route::post('/form-submissions', [FormSubmissionController::class, 'store']);

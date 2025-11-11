@@ -19,7 +19,7 @@
         </div>
         
         <div class="content">
-            {{-- <p><strong>Submitted:</strong> {{ $submission->created_at->format('F j, Y g:i A') }}</p> --}}
+            <p><strong>Submitted:</strong> {{ $submission->created_at->format('F j, Y g:i A') }}</p>
             
             @foreach($submission->data as $key => $value)
                 <div class="field">

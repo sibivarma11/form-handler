@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace SibiVarma\FormSubmissions\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\FormSubmission;
-use App\Models\EmailSetting;
-use App\Mail\FormSubmissionNotification;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use SibiVarma\FormSubmissions\Models\FormSubmission;
+use SibiVarma\FormSubmissions\Mail\FormSubmissionNotification;
 
 class FormSubmissionController extends Controller
 {
@@ -36,15 +35,14 @@ class FormSubmissionController extends Controller
         ]);
 
         try {
-            $notificationEmail = EmailSetting::get('contact_form_recipient', config('mail.from.address'));
-            Mail::to($notificationEmail)
+            Mail::to(config('form-submissions.notification_email', config('mail.from.address')))
                 ->send(new FormSubmissionNotification($submission));
         } catch (\Exception $e) {
             \Log::error('Failed to send form notification: ' . $e->getMessage());
         }
 
         return response()->json([
-            'message' => 'Thank you! Your submission has been received.',
+            'message' => config('form-submissions.success_message', 'Thank you! Your submission has been received.'),
             'id' => $submission->id
         ], 201);
     }
